@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPWebcam", "IPWebcam\IPWebcam.csproj", "{BBE2FB3E-E632-4D03-B062-3E24E902E67B}"
+EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "IPWebcamSetup", "IPWebcamSetup\IPWebcamSetup.aiproj", "{C20A9A18-1117-4FFA-8AEA-922708735D89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DefaultBuild|Any CPU = DefaultBuild|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.Debug|Any CPU.Build.0 = DefaultBuild
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{C20A9A18-1117-4FFA-8AEA-922708735D89}.Release|Any CPU.Build.0 = DefaultBuild
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC4CAC38-692B-4851-821D-B7950F78FFC3}
+	EndGlobalSection
+EndGlobal

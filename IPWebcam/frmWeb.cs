@@ -504,7 +504,7 @@ namespace IPWebcam
                             ffmpegProcess.BeginOutputReadLine();
                             ffmpegProcess.BeginErrorReadLine();
 
-                            ffmpegProcess.WaitForExit();
+                            //ffmpegProcess.WaitForExit();
                         });
                     }
                     else
@@ -540,7 +540,7 @@ namespace IPWebcam
                         ffmpegProcess.StandardInput.Write('q');
                         ffmpegProcess.StandardInput.Close();
 
-                        ffmpegProcess.WaitForExit();
+                        //ffmpegProcess.WaitForExit();
                         ffmpegProcess.CancelOutputRead();
                         ffmpegProcess.CancelErrorRead();
 

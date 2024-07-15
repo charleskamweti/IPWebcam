@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>8d81276a-cdaa-4270-94c6-62b03b3ca061</ProjectGuid>
+    <ProjectGuid>c925ac5b-b50c-4629-b1d8-fda122422a99</ProjectGuid>
     <OutputType>msi</OutputType>
     <ProjectHome>.</ProjectHome>
     <StartupFile>IP Webcam.aip</StartupFile>

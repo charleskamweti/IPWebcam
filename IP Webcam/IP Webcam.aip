@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="21.9" version="21.9" PreviousModules="simple" Modules="professional" RootPath="." Language="en" Id="{F35482F8-7469-47C2-AA2E-767C5DAD0BB2}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.9" version="21.9" PreviousModules="simple" Modules="professional" RootPath="." Language="en" Id="{E184E674-DF82-4F78-840A-174A6ACBF7B5}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="ActSyncAppComponent;CPLAppletComponent;AutorunComponent;GameUxComponent;SilverlightSlnComponent;SharePointSlnComponent"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER"/>
@@ -29,18 +32,20 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Numerics.Vectors.dll" Value="System.Numerics.Vectors.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Runtime.CompilerServices.Unsafe.dll" Value="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.ValueTuple.dll" Value="System.ValueTuple.dll"/>
+    <ROW Property="AI_ThemeStyle" Value="aero" MultiBuildValue="DefaultBuild:yellow" MsiKey="AI_ThemeStyle"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="favicon.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="Dexoit Labs Pvt Ltd"/>
-    <ROW Property="ProductCode" Value="1033:{1959D0D8-088C-4384-95AD-D49EE31A2656} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{90200566-E91F-49CD-9A4D-989D88A3E0B0} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="IP Webcam"/>
     <ROW Property="ProductVersion" Value="5.0.8" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{4E1C2F31-2255-4506-A11C-E523D32BFCD3}"/>
+    <ROW Property="UpgradeCode" Value="{8A7CFB92-27D2-43D2-947F-CB999C8ED075}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT" MultiBuildValue="DefaultBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
@@ -49,6 +54,7 @@
     <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT60" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT60Display" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:32-bit Windows versions" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
@@ -58,20 +64,40 @@
     <ROW Directory="StartMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="STARTM~1|StartMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="aaDJ_Dir" Directory_Parent="IPWebcam_Dir" DefaultDir="aa-DJ"/>
+    <ROW Directory="x64_Dir" Directory_Parent="IPWebcam_Dir" DefaultDir="x64"/>
+    <ROW Directory="x86_Dir" Directory_Parent="IPWebcam_Dir" DefaultDir="x86"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SideBySideGuidComponent">
-    <ROW Component="APPDIR" Value="{E9E561F6-2D38-4A6F-83A1-799EE5C0D2EB}"/>
-    <ROW Component="ProductInformation" Value="{D075FB4B-AB93-462C-B39C-CB577015B9A0}"/>
+    <ROW Component="APPDIR" Value="{EBE1FD12-9C2E-4902-BBAF-190CFE2199F8}"/>
+    <ROW Component="ProductInformation" Value="{65E97256-44AA-4682-95B5-74A763448163}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AI_INSTALLPERUSER" ComponentId="{585558A0-321C-44FA-B318-11A33193361F}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
-    <ROW Component="APPDIR" ComponentId="{E9E561F6-2D38-4A6F-83A1-799EE5C0D2EB}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="IPWebcam_LocalizedResourcesOutput_aaDJ" ComponentId="{763A3281-8C16-4083-B134-583CE37667DA}" Directory_="aaDJ_Dir" Attributes="0" KeyPath="IPWebcam.resources.dll"/>
-    <ROW Component="IPWebcam_PrimaryOutput" ComponentId="{55FE0214-A1C7-4AD9-9B42-07452CAC0997}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="IPWebcam.exe"/>
-    <ROW Component="IPWebcam_References" ComponentId="{9F8688C4-B6BF-4CFA-A8B8-5CB082936B5B}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="System.ValueTuple.dll"/>
-    <ROW Component="IPWebcam_SymbolsOutput" ComponentId="{ABD30E02-2F46-4513-B92C-40432E30F7D6}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="IPWebcam.pdb"/>
-    <ROW Component="ProductInformation" ComponentId="{D075FB4B-AB93-462C-B39C-CB577015B9A0}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
-    <ROW Component="SHORTCUTDIR" ComponentId="{04DB1F2A-ABF3-45A6-931C-8E56AACE0230}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="AI_INSTALLPERUSER" ComponentId="{4E3DAD78-1AD9-4093-B160-5E6007213AF1}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
+    <ROW Component="APPDIR" ComponentId="{EBE1FD12-9C2E-4902-BBAF-190CFE2199F8}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="IPWebcam_LocalizedResourcesOutput_aaDJ" ComponentId="{71BC43AB-EA06-4F2E-A1ED-80D621D18B02}" Directory_="aaDJ_Dir" Attributes="0" KeyPath="IPWebcam.resources.dll"/>
+    <ROW Component="IPWebcam_PrimaryOutput" ComponentId="{7BC961D4-0C79-48B1-BDDE-2501D8331DD0}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="IPWebcam.exe"/>
+    <ROW Component="IPWebcam_References" ComponentId="{0BA32625-1822-416F-BAC8-E9D3A083D53D}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="IPWebcam_SymbolsOutput" ComponentId="{779EFDB6-086E-4399-8A12-F25D54A0EC59}" Directory_="IPWebcam_Dir" Attributes="0" KeyPath="IPWebcam.pdb"/>
+    <ROW Component="ProductInformation" ComponentId="{65E97256-44AA-4682-95B5-74A763448163}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{3D995323-3162-4005-BCFB-2271EABABEDD}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="avcodec58.dll" ComponentId="{4DBA5005-C171-4416-B7F4-30A86B1369EC}" Directory_="x64_Dir" Attributes="256" KeyPath="avcodec58.dll"/>
+    <ROW Component="avcodec58.dll_1" ComponentId="{F7E31EF4-5305-476E-89F8-5AC86F99EB1E}" Directory_="x86_Dir" Attributes="0" KeyPath="avcodec58.dll_1"/>
+    <ROW Component="avdevice58.dll" ComponentId="{EC7837E1-E8FC-4703-BFB5-3A1980470F88}" Directory_="x64_Dir" Attributes="256" KeyPath="avdevice58.dll"/>
+    <ROW Component="avdevice58.dll_1" ComponentId="{917C8BC3-24EE-4814-8F7C-86A6230E96B1}" Directory_="x86_Dir" Attributes="0" KeyPath="avdevice58.dll_1"/>
+    <ROW Component="avfilter7.dll" ComponentId="{F2F7E810-56B8-4E9A-A870-A6DF776CC433}" Directory_="x64_Dir" Attributes="256" KeyPath="avfilter7.dll"/>
+    <ROW Component="avfilter7.dll_1" ComponentId="{B8919B3B-9202-4C49-AA89-7BC60B083DCC}" Directory_="x86_Dir" Attributes="0" KeyPath="avfilter7.dll_1"/>
+    <ROW Component="avformat58.dll" ComponentId="{6CCBB0DA-2932-43EC-9EC0-BAE982835414}" Directory_="x64_Dir" Attributes="256" KeyPath="avformat58.dll"/>
+    <ROW Component="avformat58.dll_1" ComponentId="{C2E265B3-53B4-4CF6-8661-2F999B788CC1}" Directory_="x86_Dir" Attributes="0" KeyPath="avformat58.dll_1"/>
+    <ROW Component="avutil56.dll" ComponentId="{85C2B41D-505C-494C-B015-975ACF646AA1}" Directory_="x64_Dir" Attributes="256" KeyPath="avutil56.dll"/>
+    <ROW Component="avutil56.dll_1" ComponentId="{74EE2CA7-5BE6-4913-8602-2C6AF7F340BD}" Directory_="x86_Dir" Attributes="0" KeyPath="avutil56.dll_1"/>
+    <ROW Component="libffmpeghelper.dll" ComponentId="{98144828-6546-4AF6-B121-E82A139D968B}" Directory_="x64_Dir" Attributes="256" KeyPath="libffmpeghelper.dll"/>
+    <ROW Component="libffmpeghelper.dll_1" ComponentId="{559F97C3-8418-464C-BE2F-E6C34F05622B}" Directory_="x86_Dir" Attributes="0" KeyPath="libffmpeghelper.dll_1"/>
+    <ROW Component="postproc55.dll" ComponentId="{403F386E-EE29-4849-BF66-E603AC540C3C}" Directory_="x64_Dir" Attributes="256" KeyPath="postproc55.dll"/>
+    <ROW Component="postproc55.dll_1" ComponentId="{E47B78CE-3D3B-4B57-8513-7AE421CD1990}" Directory_="x86_Dir" Attributes="0" KeyPath="postproc55.dll_1"/>
+    <ROW Component="swresample3.dll" ComponentId="{D0BD6E2F-E365-462E-8067-47F2F2630043}" Directory_="x64_Dir" Attributes="256" KeyPath="swresample3.dll"/>
+    <ROW Component="swresample3.dll_1" ComponentId="{DC1C6842-EF36-4F03-9929-04C1D5560D1A}" Directory_="x86_Dir" Attributes="0" KeyPath="swresample3.dll_1"/>
+    <ROW Component="swscale5.dll" ComponentId="{DA254CAF-CF34-41C5-804D-90403704C3A4}" Directory_="x64_Dir" Attributes="256" KeyPath="swscale5.dll"/>
+    <ROW Component="swscale5.dll_1" ComponentId="{493DD326-6F5C-4F9E-945B-4F26FB05F791}" Directory_="x86_Dir" Attributes="0" KeyPath="swscale5.dll_1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -91,6 +117,24 @@
     <ROW File="System.ValueTuple.dll" Component_="IPWebcam_References" FileName="SYSTEM~7.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.ValueTuple.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.ValueTuple.dll&gt;" SelfReg="false"/>
     <ROW File="IPWebcam.resources.dll" Component_="IPWebcam_LocalizedResourcesOutput_aaDJ" FileName="IPWEBC~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_IPWebcam.resources.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_IPWebcam.resources.dll&gt;" SelfReg="false"/>
     <ROW File="IPWebcam.pdb" Component_="IPWebcam_SymbolsOutput" FileName="IPWEBC~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_IPWebcam.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_IPWebcam.pdb&gt;" SelfReg="false"/>
+    <ROW File="avcodec58.dll" Component_="avcodec58.dll" FileName="AVCODE~1.DLL|avcodec-58.dll" Attributes="0" SourcePath="..\IPWebcam\x64\avcodec-58.dll" SelfReg="false"/>
+    <ROW File="avdevice58.dll" Component_="avdevice58.dll" FileName="AVDEVI~1.DLL|avdevice-58.dll" Attributes="0" SourcePath="..\IPWebcam\x64\avdevice-58.dll" SelfReg="false"/>
+    <ROW File="avfilter7.dll" Component_="avfilter7.dll" FileName="AVFILT~1.DLL|avfilter-7.dll" Attributes="0" SourcePath="..\IPWebcam\x64\avfilter-7.dll" SelfReg="false"/>
+    <ROW File="avformat58.dll" Component_="avformat58.dll" FileName="AVFORM~1.DLL|avformat-58.dll" Attributes="0" SourcePath="..\IPWebcam\x64\avformat-58.dll" SelfReg="false"/>
+    <ROW File="avutil56.dll" Component_="avutil56.dll" FileName="AVUTIL~1.DLL|avutil-56.dll" Attributes="0" SourcePath="..\IPWebcam\x64\avutil-56.dll" SelfReg="false"/>
+    <ROW File="libffmpeghelper.dll" Component_="libffmpeghelper.dll" FileName="LIBFFM~1.DLL|libffmpeghelper.dll" Attributes="0" SourcePath="..\IPWebcam\x64\libffmpeghelper.dll" SelfReg="false"/>
+    <ROW File="postproc55.dll" Component_="postproc55.dll" FileName="POSTPR~1.DLL|postproc-55.dll" Attributes="0" SourcePath="..\IPWebcam\x64\postproc-55.dll" SelfReg="false"/>
+    <ROW File="swresample3.dll" Component_="swresample3.dll" FileName="SWRESA~1.DLL|swresample-3.dll" Attributes="0" SourcePath="..\IPWebcam\x64\swresample-3.dll" SelfReg="false"/>
+    <ROW File="swscale5.dll" Component_="swscale5.dll" FileName="SWSCAL~1.DLL|swscale-5.dll" Attributes="0" SourcePath="..\IPWebcam\x64\swscale-5.dll" SelfReg="false"/>
+    <ROW File="avcodec58.dll_1" Component_="avcodec58.dll_1" FileName="AVCODE~1.DLL|avcodec-58.dll" Attributes="0" SourcePath="..\IPWebcam\x86\avcodec-58.dll" SelfReg="false"/>
+    <ROW File="avdevice58.dll_1" Component_="avdevice58.dll_1" FileName="AVDEVI~1.DLL|avdevice-58.dll" Attributes="0" SourcePath="..\IPWebcam\x86\avdevice-58.dll" SelfReg="false"/>
+    <ROW File="avfilter7.dll_1" Component_="avfilter7.dll_1" FileName="AVFILT~1.DLL|avfilter-7.dll" Attributes="0" SourcePath="..\IPWebcam\x86\avfilter-7.dll" SelfReg="false"/>
+    <ROW File="avformat58.dll_1" Component_="avformat58.dll_1" FileName="AVFORM~1.DLL|avformat-58.dll" Attributes="0" SourcePath="..\IPWebcam\x86\avformat-58.dll" SelfReg="false"/>
+    <ROW File="avutil56.dll_1" Component_="avutil56.dll_1" FileName="AVUTIL~1.DLL|avutil-56.dll" Attributes="0" SourcePath="..\IPWebcam\x86\avutil-56.dll" SelfReg="false"/>
+    <ROW File="libffmpeghelper.dll_1" Component_="libffmpeghelper.dll_1" FileName="LIBFFM~1.DLL|libffmpeghelper.dll" Attributes="0" SourcePath="..\IPWebcam\x86\libffmpeghelper.dll" SelfReg="false"/>
+    <ROW File="postproc55.dll_1" Component_="postproc55.dll_1" FileName="POSTPR~1.DLL|postproc-55.dll" Attributes="0" SourcePath="..\IPWebcam\x86\postproc-55.dll" SelfReg="false"/>
+    <ROW File="swresample3.dll_1" Component_="swresample3.dll_1" FileName="SWRESA~1.DLL|swresample-3.dll" Attributes="0" SourcePath="..\IPWebcam\x86\swresample-3.dll" SelfReg="false"/>
+    <ROW File="swscale5.dll_1" Component_="swscale5.dll_1" FileName="SWSCAL~1.DLL|swscale-5.dll" Attributes="0" SourcePath="..\IPWebcam\x86\swscale-5.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
@@ -230,6 +274,24 @@
     <ROW Feature_="MainFeature" Component_="IPWebcam_References"/>
     <ROW Feature_="MainFeature" Component_="IPWebcam_LocalizedResourcesOutput_aaDJ"/>
     <ROW Feature_="MainFeature" Component_="IPWebcam_SymbolsOutput"/>
+    <ROW Feature_="MainFeature" Component_="avcodec58.dll"/>
+    <ROW Feature_="MainFeature" Component_="avdevice58.dll"/>
+    <ROW Feature_="MainFeature" Component_="avfilter7.dll"/>
+    <ROW Feature_="MainFeature" Component_="avformat58.dll"/>
+    <ROW Feature_="MainFeature" Component_="avutil56.dll"/>
+    <ROW Feature_="MainFeature" Component_="libffmpeghelper.dll"/>
+    <ROW Feature_="MainFeature" Component_="postproc55.dll"/>
+    <ROW Feature_="MainFeature" Component_="swresample3.dll"/>
+    <ROW Feature_="MainFeature" Component_="swscale5.dll"/>
+    <ROW Feature_="MainFeature" Component_="avcodec58.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="avdevice58.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="avfilter7.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="avformat58.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="avutil56.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="libffmpeghelper.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="postproc55.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="swresample3.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="swscale5.dll_1"/>
     <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
@@ -257,6 +319,7 @@
     <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="( Version9X OR VersionNT64 )" Description="[ProductName] cannot be installed on [WindowsTypeNTDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="[ProductName] cannot be installed on [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.35026.282
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPWebcam", "IPWebcam\IPWebcam.csproj", "{BBE2FB3E-E632-4D03-B062-3E24E902E67B}"
 EndProject
-Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "IP Webcam", "IP Webcam\IP Webcam.aiproj", "{8D81276A-CDAA-4270-94C6-62B03B3CA061}"
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "IP Webcam", "IP Webcam\IP Webcam.aiproj", "{C925AC5B-B50C-4629-B1D8-FDA122422A99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,12 +20,12 @@ Global
 		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBE2FB3E-E632-4D03-B062-3E24E902E67B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.Debug|Any CPU.ActiveCfg = DefaultBuild
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.Debug|Any CPU.Build.0 = DefaultBuild
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.Release|Any CPU.ActiveCfg = DefaultBuild
-		{8D81276A-CDAA-4270-94C6-62B03B3CA061}.Release|Any CPU.Build.0 = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.Debug|Any CPU.Build.0 = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.DefaultBuild|Any CPU.ActiveCfg = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{C925AC5B-B50C-4629-B1D8-FDA122422A99}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

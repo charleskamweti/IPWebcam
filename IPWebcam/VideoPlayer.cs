@@ -19,7 +19,6 @@ namespace IPWebcam
     {
         private readonly Dictionary<FFmpegVideoCodecId, FFmpegVideoDecoder> _videoDecodersMap = new Dictionary<FFmpegVideoCodecId, FFmpegVideoDecoder>();
         private Bitmap bmp;
-        private TransformParameters transformParameters;
         private CancellationTokenSource _cancellationTokenSource;
         private static string overlayText;
         private static string fontName;

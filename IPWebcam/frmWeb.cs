@@ -27,8 +27,6 @@ namespace IPWebcam
         private string fontName = "Cambria";
         private float fontSize = 16;
         private Color textColor = Color.White;
-        private string fileName;
-        private string fullPath;
         private TimeSpan elapsedTime = TimeSpan.Zero;
         private CancellationTokenSource _cancellationTokenSource;
         private Process ffmpegProcess;
@@ -160,6 +158,68 @@ namespace IPWebcam
             return CalculateColorPercentage(image, darkGray);
         }
 
+        static bool IsBlurry(Bitmap image)
+        {
+            int width = image.Width;
+            int height = image.Height;
+            double variance = 0;
+
+            BitmapData bmpData = image.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, image.PixelFormat);
+
+            IntPtr ptr = bmpData.Scan0;
+            int bytes = Math.Abs(bmpData.Stride) * height;
+            byte[] rgbValues = new byte[bytes];
+            Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+            double totalLuminance = 0;
+            for (int i = 0; i < rgbValues.Length; i += 4)
+            {
+                double luminance = 0.2126 * rgbValues[i + 2] + 0.7152 * rgbValues[i + 1] + 0.0722 * rgbValues[i];
+                totalLuminance += luminance;
+            }
+
+            double meanLuminance = totalLuminance / (width * height);
+
+            for (int i = 0; i < rgbValues.Length; i += 4)
+            {
+                double luminance = 0.2126 * rgbValues[i + 2] + 0.7152 * rgbValues[i + 1] + 0.0722 * rgbValues[i];
+                variance += Math.Pow(luminance - meanLuminance, 2);
+            }
+
+            image.UnlockBits(bmpData);
+            variance /= (width * height);
+            return variance < 50; // Threshold for blur detection
+        }
+
+        static bool IsSingleColor(Bitmap image)
+        {
+            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+            BitmapData bmpData = image.LockBits(rect, ImageLockMode.ReadWrite, image.PixelFormat);
+
+            IntPtr ptr = bmpData.Scan0;
+            int bytes = Math.Abs(bmpData.Stride) * image.Height;
+            byte[] rgbValues = new byte[bytes];
+            Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+            // Get the first pixel color
+            byte firstBlue = rgbValues[0];
+            byte firstGreen = rgbValues[1];
+            byte firstRed = rgbValues[2];
+
+            bool isSingleColor = true;
+            for (int i = 0; i < rgbValues.Length; i += 4)
+            {
+                if (rgbValues[i] != firstBlue || rgbValues[i + 1] != firstGreen || rgbValues[i + 2] != firstRed)
+                {
+                    isSingleColor = false;
+                    break;
+                }
+            }
+
+            image.UnlockBits(bmpData);
+            return isSingleColor;
+        }
+
         private async Task StartColorPixelMonitoringTask()
         {
             await Task.Run(async () =>
@@ -192,6 +252,24 @@ namespace IPWebcam
                                 videoPlayer1.Invoke((MethodInvoker)delegate
                                 {
                                     AlertNotification.ShowAlertMessage("The stream contains mostly black, gray, light gray, or dark gray. Objects may not be visible.", AlertNotification.AlertType.ERROR);
+                                });
+                            }
+
+                            // Check for single color
+                            if (IsSingleColor(screenshot))
+                            {
+                                videoPlayer1.Invoke((MethodInvoker)delegate
+                                {
+                                    AlertNotification.ShowAlertMessage("The stream is entirely a single color.", AlertNotification.AlertType.ERROR);
+                                });
+                            }
+
+                            // Check for blur
+                            if (IsBlurry(screenshot))
+                            {
+                                videoPlayer1.Invoke((MethodInvoker)delegate
+                                {
+                                    AlertNotification.ShowAlertMessage("The stream appears to be blurry.", AlertNotification.AlertType.ERROR);
                                 });
                             }
                         }

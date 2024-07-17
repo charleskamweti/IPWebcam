@@ -15,6 +15,8 @@ using System.Diagnostics;
 using System.Web;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IPWebcam
 {
@@ -101,23 +103,13 @@ namespace IPWebcam
             int totalPixels = image.Width * image.Height;
             int colorPixels = 0;
 
-            // Lock the bitmap's bits.  
             Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
-            BitmapData bmpData =
-                image.LockBits(rect, ImageLockMode.ReadWrite,
-                image.PixelFormat);
-
-            // Get the address of the first line.
+            BitmapData bmpData = image.LockBits(rect, ImageLockMode.ReadWrite, image.PixelFormat);
             IntPtr ptr = bmpData.Scan0;
-
-            // Declare an array to hold the bytes of the bitmap.
             int bytes = Math.Abs(bmpData.Stride) * image.Height;
             byte[] rgbValues = new byte[bytes];
-
-            // Copy the RGB values into the array.
             Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-            // Check color in every 4 bytes (RGBA)
             for (int i = 0; i < rgbValues.Length; i += 4)
             {
                 if (rgbValues[i] == color.B && rgbValues[i + 1] == color.G && rgbValues[i + 2] == color.R)
@@ -126,98 +118,75 @@ namespace IPWebcam
                 }
             }
 
-            // Unlock the bits.
             image.UnlockBits(bmpData);
-
-            // Calculate the percentage of pixels with the specified color
             double colorPercentage = (double)colorPixels / totalPixels * 100;
             return colorPercentage;
         }
 
-        static double CalculateBlackPercentage(Bitmap image)
+        static bool IsSingleColor(Bitmap image, double threshold = 98.0)
         {
-            Color black = Color.FromArgb(0, 0, 0);
-            return CalculateColorPercentage(image, black);
-        }
+            Dictionary<Color, int> colorCount = new Dictionary<Color, int>();
+            int totalPixels = image.Width * image.Height;
 
-        static double CalculateGrayPercentage(Bitmap image)
-        {
-            Color gray = Color.FromArgb(128, 128, 128); // Adjust as needed
-            return CalculateColorPercentage(image, gray);
-        }
-
-        static double CalculateLightGrayPercentage(Bitmap image)
-        {
-            Color lightGray = Color.FromArgb(192, 192, 192); // Adjust as needed
-            return CalculateColorPercentage(image, lightGray);
-        }
-
-        static double CalculateDarkGrayPercentage(Bitmap image)
-        {
-            Color darkGray = Color.FromArgb(64, 64, 64); // Adjust as needed
-            return CalculateColorPercentage(image, darkGray);
-        }
-
-        static bool IsBlurry(Bitmap image)
-        {
-            int width = image.Width;
-            int height = image.Height;
-            double variance = 0;
-
-            BitmapData bmpData = image.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, image.PixelFormat);
-
-            IntPtr ptr = bmpData.Scan0;
-            int bytes = Math.Abs(bmpData.Stride) * height;
-            byte[] rgbValues = new byte[bytes];
-            Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-            double totalLuminance = 0;
-            for (int i = 0; i < rgbValues.Length; i += 4)
+            for (int x = 0; x < image.Width; x++)
             {
-                double luminance = 0.2126 * rgbValues[i + 2] + 0.7152 * rgbValues[i + 1] + 0.0722 * rgbValues[i];
-                totalLuminance += luminance;
-            }
-
-            double meanLuminance = totalLuminance / (width * height);
-
-            for (int i = 0; i < rgbValues.Length; i += 4)
-            {
-                double luminance = 0.2126 * rgbValues[i + 2] + 0.7152 * rgbValues[i + 1] + 0.0722 * rgbValues[i];
-                variance += Math.Pow(luminance - meanLuminance, 2);
-            }
-
-            image.UnlockBits(bmpData);
-            variance /= (width * height);
-            return variance < 50; // Threshold for blur detection
-        }
-
-        static bool IsSingleColor(Bitmap image)
-        {
-            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
-            BitmapData bmpData = image.LockBits(rect, ImageLockMode.ReadWrite, image.PixelFormat);
-
-            IntPtr ptr = bmpData.Scan0;
-            int bytes = Math.Abs(bmpData.Stride) * image.Height;
-            byte[] rgbValues = new byte[bytes];
-            Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-            // Get the first pixel color
-            byte firstBlue = rgbValues[0];
-            byte firstGreen = rgbValues[1];
-            byte firstRed = rgbValues[2];
-
-            bool isSingleColor = true;
-            for (int i = 0; i < rgbValues.Length; i += 4)
-            {
-                if (rgbValues[i] != firstBlue || rgbValues[i + 1] != firstGreen || rgbValues[i + 2] != firstRed)
+                for (int y = 0; y < image.Height; y++)
                 {
-                    isSingleColor = false;
-                    break;
+                    Color pixelColor = image.GetPixel(x, y);
+                    if (colorCount.ContainsKey(pixelColor))
+                    {
+                        colorCount[pixelColor]++;
+                    }
+                    else
+                    {
+                        colorCount[pixelColor] = 1;
+                    }
                 }
             }
 
-            image.UnlockBits(bmpData);
-            return isSingleColor;
+            foreach (var color in colorCount)
+            {
+                double colorPercentage = (double)color.Value / totalPixels * 100;
+                if (colorPercentage >= threshold)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static bool IsImageScratched(Bitmap image, double threshold = 5000)
+        {
+            Bitmap edgeImage = new Bitmap(image.Width, image.Height);
+            using (Graphics g = Graphics.FromImage(edgeImage))
+            {
+                g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
+            }
+
+            double variance = CalculateVariance(edgeImage);
+            return variance < threshold;
+        }
+
+        static double CalculateVariance(Bitmap image)
+        {
+            int[] histogram = new int[256];
+            int totalPixels = image.Width * image.Height;
+
+            for (int x = 0; x < image.Width; x++)
+            {
+                for (int y = 0; y < image.Height; y++)
+                {
+                    Color pixelColor = image.GetPixel(x, y);
+                    int intensity = (int)(pixelColor.R * 0.299 + pixelColor.G * 0.587 + pixelColor.B * 0.114);
+                    histogram[intensity]++;
+                }
+            }
+
+            double mean = histogram.Average();
+            double variance = histogram.Select(val => Math.Pow(val - mean, 2)).Sum() / totalPixels;
+
+            return variance;
         }
 
         private async Task StartColorPixelMonitoringTask()
@@ -228,7 +197,6 @@ namespace IPWebcam
                 {
                     if (videoPlayer1 != null)
                     {
-                        // Capture the screenshot from the control
                         Bitmap screenshot = null;
                         videoPlayer1.Invoke((MethodInvoker)delegate
                         {
@@ -237,45 +205,38 @@ namespace IPWebcam
 
                         if (screenshot != null)
                         {
-                            // Check if the stream contains significant percentages of black, gray, light gray, and dark gray pixels
-                            double blackPercentage = CalculateBlackPercentage(screenshot);
-                            double grayPercentage = CalculateGrayPercentage(screenshot);
-                            double lightGrayPercentage = CalculateLightGrayPercentage(screenshot);
-                            double darkGrayPercentage = CalculateDarkGrayPercentage(screenshot);
+                            double blackPercentage = CalculateColorPercentage(screenshot, Color.Black);
+                            double grayPercentage = CalculateColorPercentage(screenshot, Color.Gray);
+                            double lightGrayPercentage = CalculateColorPercentage(screenshot, Color.LightGray);
+                            double darkGrayPercentage = CalculateColorPercentage(screenshot, Color.DarkGray);
 
-                            // Set the thresholds to 98% for each color
                             double threshold = 98.0;
 
                             if (blackPercentage >= threshold || grayPercentage >= threshold || lightGrayPercentage >= threshold || darkGrayPercentage >= threshold)
                             {
-                                // Show alert message
                                 videoPlayer1.Invoke((MethodInvoker)delegate
                                 {
                                     AlertNotification.ShowAlertMessage("The stream contains mostly black, gray, light gray, or dark gray. Objects may not be visible.", AlertNotification.AlertType.ERROR);
                                 });
                             }
 
-                            // Check for single color
-                            if (IsSingleColor(screenshot))
+                            if (IsSingleColor(screenshot, threshold))
                             {
                                 videoPlayer1.Invoke((MethodInvoker)delegate
                                 {
-                                    AlertNotification.ShowAlertMessage("The stream is entirely a single color.", AlertNotification.AlertType.ERROR);
+                                    AlertNotification.ShowAlertMessage("The stream contains mostly a single color.", AlertNotification.AlertType.ERROR);
                                 });
                             }
 
-                            // Check for blur
-                            if (IsBlurry(screenshot))
+                            if (IsImageScratched(screenshot))
                             {
                                 videoPlayer1.Invoke((MethodInvoker)delegate
                                 {
-                                    AlertNotification.ShowAlertMessage("The stream appears to be blurry.", AlertNotification.AlertType.ERROR);
+                                    AlertNotification.ShowAlertMessage("The stream appears to be scratched or unclear.", AlertNotification.AlertType.ERROR);
                                 });
                             }
                         }
                     }
-
-                    // Wait for 6 second before checking again
                     await Task.Delay(6000);
                 }
             });
@@ -759,10 +720,10 @@ namespace IPWebcam
                     Bitmap screenshot = CaptureControlScreenshot(videoPlayer1);
 
                     // Check if the stream contains significant percentages of black, gray, light gray, and dark gray pixels
-                    double blackPercentage = CalculateBlackPercentage(screenshot);
-                    double grayPercentage = CalculateGrayPercentage(screenshot);
-                    double lightGrayPercentage = CalculateLightGrayPercentage(screenshot);
-                    double darkGrayPercentage = CalculateDarkGrayPercentage(screenshot);
+                    double blackPercentage = CalculateColorPercentage(screenshot, Color.Black);
+                    double grayPercentage = CalculateColorPercentage(screenshot, Color.Gray);
+                    double lightGrayPercentage = CalculateColorPercentage(screenshot, Color.LightGray);
+                    double darkGrayPercentage = CalculateColorPercentage(screenshot, Color.DarkGray);
 
                     // Set the thresholds to 98% for each color
                     double threshold = 98.0;
